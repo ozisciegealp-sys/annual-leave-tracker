@@ -1,5 +1,7 @@
 # Yıllık İzin Takip Sistemi
 
+*Excel system that tracks accrued annual leave and upcoming entitlements across six regions from periodic HR data. Documentation in Turkish; all data is synthetic.*
+
 İK'dan gelen personel datasından, çok bölgeli bir perakende operasyonunda **biriken yıllık izinleri** ve **yaklaşan izin hak edişlerini** izleyen, bölge bazında özet ve planlama listesi çıkaran Excel çalışma kitabı.
 
 > **Not:** Bu dosya, bir kahve zincirinde 6 bölgenin personeli için kurduğum ve yürüttüğüm sistemin **yeniden kurulmuş sürümüdür**. Orijinal dosya elimde olmadığı için yapı, sistemin nasıl çalıştığı hatırlanarak baştan oluşturulmuştur. Tüm personel verileri (isimler, sicil numaraları, tarihler, bakiyeler) uydurmadır.
