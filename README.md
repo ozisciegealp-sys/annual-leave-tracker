@@ -4,7 +4,7 @@
 
 > **Not:** Bu dosya, bir kahve zincirinde 6 bölgenin personeli için kurduğum ve yürüttüğüm sistemin **yeniden kurulmuş sürümüdür**. Orijinal dosya elimde olmadığı için yapı, sistemin nasıl çalıştığı hatırlanarak baştan oluşturulmuştur. Tüm personel verileri (isimler, sicil numaraları, tarihler, bakiyeler) uydurmadır.
 >
-> Orijinalde özetler pivot tablolarla hazırlanıyordu. Bu sürümde aynı özetler formülle (`COUNTIFS`, `SUMIFS`) kurulmuştur; yeni data yapıştırıldığında pivot yenilemeye gerek kalmadan güncellenir.
+> Orijinalde özetler pivot tablolardan çıkarılıp bölge müdürleri ve operasyon müdürleri için infografiğe dönüştürülüyordu. Bu sürümde aynı özetler formülle (`COUNTIFS`, `SUMIFS`) kurulmuştur ve grafikler bu özetten çizilir; yeni data yapıştırıldığında pivot yenilemeye gerek kalmadan güncellenir.
 
 ## Hangi problemi çözüyor
 
