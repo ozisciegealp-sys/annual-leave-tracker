@@ -2,99 +2,64 @@
 
 **Türkçe** | [English](README.en.md)
 
-*Excel system that tracks accrued annual leave and upcoming entitlements across six areas from periodic HR data. Full English documentation in [README.en.md](README.en.md); all data is synthetic.*
+İK'dan periyodik gelen personel verisinden, 6 bölgeli bir perakende operasyonunda **biriken yıllık izin bakiyelerini** ve **yaklaşan izin hak edişlerini** izleyen, bölge bazında alarm özeti ve öncelikli planlama listesi üreten Excel çalışma kitabı.
 
-İK'dan gelen personel datasından, çok bölgeli bir perakende operasyonunda **biriken yıllık izinleri** ve **yaklaşan izin hak edişlerini** izleyen, bölge bazında özet ve planlama listesi çıkaran Excel çalışma kitabı.
-
-> **Not:** Bu dosya, bir kahve zincirinde 6 bölgenin personeli için kurduğum ve yürüttüğüm sistemin **yeniden kurulmuş sürümüdür**. Orijinal dosya elimde olmadığı için yapı, sistemin nasıl çalıştığı hatırlanarak baştan oluşturulmuştur. Tüm personel verileri (isimler, sicil numaraları, tarihler, bakiyeler) uydurmadır.
->
-> Orijinalde özetler pivot tablolardan çıkarılıp bölge müdürleri ve operasyon müdürleri için infografiğe dönüştürülüyordu. Bu sürümde aynı özetler formülle (`COUNTIFS`, `SUMIFS`) kurulmuştur ve grafikler bu özetten çizilir; yeni data yapıştırıldığında pivot yenilemeye gerek kalmadan güncellenir.
+> **Gizlilik ve Sentetik Veri Notu:** Bu çalışma kitabı, 6 bölgenin saha personeli için kurduğum ve yürüttüğüm yıllık izin takip sisteminin **tamamen sentetik (kurgu) veriyle** yeniden oluşturulmuş sürümüdür. Kurumsal gizlilik ve KVKK gereği hiçbir gerçek çalışan bilgisi, sicil numarası, mağaza veya marka adı yer almaz; tüm kayıtlar örnekleme amacıyla üretilmiştir.
 
 ## Hangi problemi çözüyor
 
-Bölgelerde kullanılmayan izin birikir. Biriken izin, hem personelin yasal hakkıdır hem de ileride bir anda kullanıldığında vardiya planını zorlar. Bu sistem:
+Çok şubeli saha operasyonlarında kullanılmayan yıllık izinler zamanla birikir; biriken bakiyeler hem yasal yükümlülük oluşturur hem de toplu kullanıldığında mağaza vardiya planlarını zorlar. Bu sistem:
 
-- Her personelin kıdemine ve yaşına göre yıllık izin hakkını İş Kanunu'na göre hesaplar.
-- Önümüzdeki 60 gün içinde yeni izin hak edecekleri işaretler.
-- İki İK datası arasındaki farktan dönem içinde kullanılan izni çıkarır.
-- Bakiyesi 14 gün ve üzeri olanları büyükten küçüğe listeler ve bölge müdürüne gönderilecek bilgilendirme metnini hazırlar.
-- Bölge bazında biriken izni, 20 gün üstü kişi sayısına göre alarmı ve önceki döneme göre değişimi gösterir.
-- Tüm Türkiye datası geldiğinde takip edilen bölgeler dışındaki kayıtları hesaplardan otomatik ayıklar.
+- Her çalışanın kıdemine ve yaşına göre yıllık izin hak edişini **4857 sayılı İş Kanunu (Md. 53)** dilimlerine göre hesaplar.
+- Önümüzdeki **60 gün içinde** yeni yıllık izin hak edecek personeli önceden işaretler.
+- İki dönem İK verisi arasındaki farktan dönem içinde kullandırılan izin gününü çıkarır; veri tutarsızlıklarını (`Kontrol et`) ve yeni giriş / ayrılışları otomatik ayıklar.
+- Bakiyesi **14 gün ve üzeri** olan çalışanları büyükten küçüğe sıralar ve bölge/mağaza yöneticilerine iletilecek bilgilendirme metnini otomatik üretir.
+- Bölge özetinde 20 gün üstü personel sayısına göre **▲ ALARM** veya **● Planla** durumu üretir; ülke geneli ham veri yapıştırıldığında kapsam dışı bölgeleri hesaplardan otomatik filtreler.
 
 ## Öncesi
 
-İzin bakiyeleri elle takip edilmeye çalışılıyordu. Bu sistemle hesaplar formüle bağlandı.
+İzin bakiyeleri ve hak ediş tarihleri ham İK listeleri üzerinden elle süzülerek takip edilmeye çalışılıyordu; tüm hesaplar, alarmlar ve bölge listeleri formül yapısına bağlandı.
 
 ## Kullanım akışı
 
-İK datası operasyon müdürüne geldiğinde:
+Yeni dönem İK verisi geldiğinde:
 
-1. `Veri_Guncel`'deki veriyi `Veri_Onceki`'ye taşıyın (A–H sütunları, **değer olarak**). `Ayarlar`'da önceki data tarihini güncelleyin.
-2. Yeni datayı `Veri_Guncel`'e aynı sütun sırasıyla yapıştırın. `Ayarlar`'da güncel data tarihini girin.
-3. `Ozet` sayfası bölge karşılaştırmasını ve grafikleri gösterir.
-4. `Ayarlar` > **Liste bölgesi**'nden bir bölge seçin. `Liste_14_Gun` o bölgenin listesini ve bilgilendirme metnini verir. Metin ve liste bölge müdürüne iletilir; bölge müdürü de ilgili mağaza yöneticilerine aktarır.
+1. `Veri_Guncel` sayfasındaki mevcut tabloyu (A–H sütunları) `Veri_Onceki` sayfasına **değer olarak** yapıştırın ve `Ayarlar` sayfasında önceki veri tarihini güncelleyin.
+2. Yeni İK verisini `Veri_Guncel` sayfasına aynı sütun düzeniyle yapıştırıp güncel veri tarihini girin.
+3. `Ozet` sayfasından 6 bölgenin bakiye yükünü, alarm durumunu, önceki döneme göre değişimi ve grafikleri inceleyin.
+4. `Ayarlar` > **Liste bölgesi** hücresinden bölge seçerek `Liste_14_Gun` sayfasındaki öncelikli personel listesini ve hazır bilgilendirme metnini ilgili yöneticilerle paylaşın.
 
 ## Sayfalar
 
 | Sayfa | Ne yapar |
 |---|---|
-| `Nasil_Kullanilir` | Akış, hesaplar ve renk kodu |
-| `Ozet` | Bölge bazında personel, biriken izin, 14+ ve 20+ gün kişi sayısı, alarm, yaklaşan hak ediş, dönemde kullanılan, önceki döneme göre değişim, yeni ve ayrılan personel; iki grafik |
-| `Liste_14_Gun` | Bakiyesi eşiğin üzerindekiler, büyükten küçüğe; bilgilendirme metni taslağı |
-| `Takip` | Kişi bazında tüm hesaplar |
-| `Ayarlar` | Data tarihleri, eşikler, takip edilen bölgeler, liste filtresi |
-| `Veri_Guncel` / `Veri_Onceki` | İK datasının yapıştırıldığı sayfalar |
+| `Nasil_Kullanilir` | Dönemsel iş akışı, yasal hesap kuralları ve renk kodu |
+| `Ozet` | 6 bölge bazında personel sayısı, biriken izin, 14+ ve 20+ gün kişi sayısı, alarm durumu, yaklaşan hak ediş, kullandırılan izin, dönem farkı ve iki karşılaştırma grafiği |
+| `Liste_14_Gun` | Seçili bölgede bakiyesi eşik üstü personelin büyükten küçüğe sıralı listesi ve hazır yönetici bilgilendirme taslağı |
+| `Takip` | Personel bazında kıdem, yasal hak, yıldönümü ve dönem farkı hesapları |
+| `Ayarlar` | Veri tarihleri, planlama/alarm eşikleri (14 / 20 gün), takip edilen 6 bölge ve liste filtresi |
+| `Veri_Guncel` / `Veri_Onceki` | Güncel ve bir önceki dönem İK verilerinin yapıştırıldığı sayfalar |
 
 ## Hesaplar
 
-**Yıllık izin hakkı** (4857 sayılı İş Kanunu, madde 53):
+**Yıllık izin hakkı** (4857 sayılı İş Kanunu, Madde 53):
 
-| Kıdem | Gün |
+| Kıdem / Yaş Koşulu | Yıllık Hak (Gün) |
 |---|---|
 | 1 yıldan az | Hak yok |
 | 1–5 yıl (5 hariç) | 14 |
 | 5–15 yıl (15 hariç) | 20 |
 | 15 yıl ve üzeri | 26 |
-| 18 yaş ve altı ya da 50 yaş ve üzeri | En az 20 |
+| 18 yaş ve altı veya 50 yaş ve üzeri | En az 20 |
 
 - **Sonraki hak ediş tarihi** = işe giriş tarihinin bir sonraki yıldönümü
-- **Dönemde kazanılan** = işe giriş yıldönümü iki data tarihi arasına düşüyorsa yıllık hak, düşmüyorsa 0
-- **Dönemde kullanılan** = önceki bakiye + dönemde kazanılan − güncel bakiye
-  - Sonuç eksi çıkarsa kayıt **Kontrol et** olarak işaretlenir (veri hatası ya da elle düzeltme).
-  - Önceki datada olmayan kişi **Yeni personel** olarak işaretlenir.
-- **Bakiye durumu**: 14 gün ve üzeri **Planla**, 20 gün ve üzeri **ALARM**
-- **Bölge alarmı**: 20 gün üzerindeki kişi sayısı eşiğe (varsayılan 5) ulaşırsa bölge **▲ ALARM**, eşiğin altında ama 14 gün üzeri kişi varsa **● Planla**
-
-Tüm eşikler `Ayarlar` sayfasından değiştirilebilir.
+- **Dönemde kazanılan** = işe giriş yıldönümü iki veri tarihi arasına düşüyorsa yıllık hak, düşmüyorsa `0`
+- **Dönemde kullanılan** = `önceki bakiye + dönemde kazanılan − güncel bakiye` (eksi sonuç çıkarsa `Kontrol et`, önceki veride yoksa `Yeni personel` olarak işaretlenir)
+- **Bölge alarmı**: 20 gün üstü personel sayısı eşiğe (varsayılan `5`) ulaşırsa **▲ ALARM**, altında kalıp 14 gün üstü personel varsa **● Planla**
 
 ## Kurulum ve veri formatı
 
-Makro yoktur, kurulum gerekmez. `izin-takip.xlsx` dosyası Excel 2010 ve sonrası ile LibreOffice'te açılır.
-
-İK datası şu sütun sırasıyla yapıştırılmalıdır:
-
-| A | B | C | D | E | F | G | H |
-|---|---|---|---|---|---|---|---|
-| Sicil No | Ad Soyad | Bölge | Mağaza | İşe Giriş Tarihi | Doğum Tarihi | Görev | Kalan İzin (gün) |
-
-Datanın sütun sırası farklıysa yapıştırmadan önce bu sıraya getirilmelidir. Doğum tarihi yoksa F sütunu boş bırakılır; yaş kuralı o kişi için uygulanmaz.
-
-`Veri_Onceki` sayfasının I sütunu yardımcı formüldür (ayrılan personeli bulur); yapıştırırken yalnızca A–H sütunları kullanılmalıdır.
-
-## Kendi verinize uyarlama
-
-| Nerede | Ne değiştirilir |
-|---|---|
-| `Ayarlar` A15–A20 | Takip edilen bölge adları; İK datasındaki yazımla aynı olmalı |
-| `Ayarlar` B6–B9 | Planlama ve alarm eşikleri, bölge alarmı kişi sayısı, hak ediş penceresi |
-
-Sistem 500 personele kadar hesaplar. Daha büyük datada `Takip` sayfasındaki formül satırları aşağı doğru kopyalanmalıdır.
-
-## Sınırlar
-
-- Kısmi yıl, ücretsiz izin veya şirkete özel ek izin hakları hesaba katılmaz.
-- Bakiye İK datasından alınır; sistem bakiyeyi kendisi hesaplamaz, değişimini izler.
-- Bilgilendirme e-postası otomatik gönderilmez; metin ve liste kopyalanarak iletilir.
+Makro içermez; `izin-takip.xlsx` Excel 2010+ ve LibreOffice'te doğrudan açılır. Ham veri `A:H` sütunlarına (`Sicil No | Ad Soyad | Bölge | Mağaza | İşe Giriş Tarihi | Doğum Tarihi | Görev | Kalan İzin`) yapıştırılır.
 
 ## Lisans
 
